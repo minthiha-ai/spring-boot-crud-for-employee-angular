@@ -1,0 +1,27 @@
+<div class="container p-4">
+    <h1 className="">Update Employee</h1>
+    <form [formGroup]="updateEmployeeForm" method="post" class="form">
+        <div class="mb-4 form-group">
+            <label for="id">Employee ID</label>
+            <input type="text" id="id" name="employeeId" formControlName="employeeId" class="form-control" />
+        </div>
+        <div class="mb-4">
+            <label for="name">Employee Name</label>
+            <input type="text" id="name" name="employeeName" formControlName="employeeName" class="form-control" />
+        </div>
+        <div class="mb-4">
+            <label for="email">Employee Email</label>
+            <input type="email" id="emial" name="employeeEmail" formControlName="employeeEmail" class="form-control" />
+        </div>
+        <div class="mb-4">
+            <label for="phone">Employee Phone</label>
+            <input type="number" id="phone" name="employeePhone" formControlName="employeePhone" class="form-control" />
+        </div>
+        <button type="submit" (click)="updateEmployee()" class="btn btn-primary">
+            Update
+        </button>
+        <!-- <button type="submit" (click)="deleteEmployee()" class="btn btn-primary">
+            Delete -->
+        </button>
+    </form>
+</div>

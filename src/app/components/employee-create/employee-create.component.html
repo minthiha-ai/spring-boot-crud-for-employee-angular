@@ -1,24 +1,43 @@
 <div class="container p-4">
-    <h1 className="">Register Employee</h1>
-    <form [formGroup]="postEmployeeForm" method="post" class="form">
-        <div class="mb-4 form-group">
+    <h1>Register Employee</h1>
+    <form [formGroup]="postEmployeeForm" (ngSubmit)="postEmployee()" class="form">
+
+        <div class="mb-4">
             <label for="id">Employee ID</label>
-            <input type="text" id="id" name="employeeId" formControlName="employeeId" class="form-control" />
+            <input type="text" id="id" formControlName="employeeId" class="form-control" />
+            <div *ngIf="isFieldInvalid('employeeId')" class="text-danger">
+                <small *ngIf="f['employeeId'].errors?.['required']">Employee ID is required.</small>
+                <small *ngIf="f['employeeId'].errors?.['maxlength']">Employee ID cannot exceed 5 characters.</small>
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="name">Employee Name</label>
-            <input type="text" id="name" name="employeeName" formControlName="employeeName" class="form-control" />
+            <input type="text" id="name" formControlName="employeeName" class="form-control" />
+            <div *ngIf="isFieldInvalid('employeeName')" class="text-danger">
+                <small *ngIf="f['employeeName'].errors?.['required']">Employee Name is required.</small>
+                <small *ngIf="f['employeeName'].errors?.['minlength']">Employee Name must be at least 3
+                    characters.</small>
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="email">Employee Email</label>
-            <input type="email" id="emial" name="employeeEmail" formControlName="employeeEmail" class="form-control" />
+            <input type="email" id="email" formControlName="employeeEmail" class="form-control" />
+            <div *ngIf="isFieldInvalid('employeeEmail')" class="text-danger">
+                <small *ngIf="f['employeeEmail'].errors?.['required']">Employee Email is required.</small>
+                <small *ngIf="f['employeeEmail'].errors?.['email']">Enter a valid email address.</small>
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="phone">Employee Phone</label>
-            <input type="number" id="phone" name="employeePhone" formControlName="employeePhone" class="form-control" />
+            <input type="text" id="phone" formControlName="employeePhone" class="form-control" />
+            <div *ngIf="isFieldInvalid('employeePhone')" class="text-danger">
+                <small *ngIf="f['employeePhone'].errors?.['pattern']">Phone number must be 10-11 digits.</small>
+            </div>
         </div>
-        <button type="submit" (click)="postEmployee()" class="btn btn-primary">
-            Submit
-        </button>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

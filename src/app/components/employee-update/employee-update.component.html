@@ -1,27 +1,66 @@
 <div class="container p-4">
     <h1 className="">Update Employee</h1>
-    <form [formGroup]="updateEmployeeForm" method="post" class="form">
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="updateEmployeeForm" (ngSubmit)="updateEmployee()" class="form">
+
         <div class="mb-4 form-group">
             <label for="id">Employee ID</label>
-            <input type="text" id="id" name="employeeId" formControlName="employeeId" class="form-control" />
+            <input type="text" id="id" formControlName="employeeId" class="form-control" />
+            <div *ngIf="f['employeeId'].errors?.['required'] && f['employeeId'].touched" class="text-danger">
+                Employee ID is required.
+            </div>
+            <div *ngIf="f['employeeId'].errors?.['maxlength'] && f['employeeId'].touched" class="text-danger">
+                Employee ID cannot exceed 5 characters.
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="name">Employee Name</label>
-            <input type="text" id="name" name="employeeName" formControlName="employeeName" class="form-control" />
+            <input type="text" id="name" formControlName="employeeName" class="form-control" />
+            <div *ngIf="f['employeeName'].errors?.['required'] && f['employeeName'].touched" class="text-danger">
+                Employee Name is required.
+            </div>
+            <div *ngIf="f['employeeName'].errors?.['minlength'] && f['employeeName'].touched" class="text-danger">
+                Employee Name must be at least 3 characters.
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="email">Employee Email</label>
-            <input type="email" id="emial" name="employeeEmail" formControlName="employeeEmail" class="form-control" />
+            <input type="email" id="email" formControlName="employeeEmail" class="form-control" />
+            <div *ngIf="f['employeeEmail'].errors?.['required'] && f['employeeEmail'].touched" class="text-danger">
+                Employee Email is required.
+            </div>
+            <div *ngIf="f['employeeEmail'].errors?.['email'] && f['employeeEmail'].touched" class="text-danger">
+                Enter a valid email address.
+            </div>
         </div>
+
         <div class="mb-4">
             <label for="phone">Employee Phone</label>
-            <input type="number" id="phone" name="employeePhone" formControlName="employeePhone" class="form-control" />
+            <input type="text" id="phone" formControlName="employeePhone" class="form-control" />
+            <div *ngIf="f['employeePhone'].errors?.['required'] && f['employeePhone'].touched" class="text-danger">
+                Employee Phone is required.
+            </div>
+            <div *ngIf="f['employeePhone'].errors?.['pattern'] && f['employeePhone'].touched" class="text-danger">
+                Phone number must be 10 to 11 digits.
+            </div>
         </div>
-        <button type="submit" (click)="updateEmployee()" class="btn btn-primary">
-            Update
-        </button>
-        <!-- <button type="submit" (click)="deleteEmployee()" class="btn btn-primary">
-            Delete -->
-        </button>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                {{ isLoading ? 'Updating...' : 'Update' }}
+            </button>
+            <button type="button" (click)="deleteEmployee()" class="btn btn-danger" [disabled]="isLoading">
+                {{ isLoading ? 'Deleting...' : 'Delete' }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="navigateToEmployees()">
+                Cancel
+            </button>
+        </div>
     </form>
 </div>
